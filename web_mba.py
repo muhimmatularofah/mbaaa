@@ -108,7 +108,7 @@ with st.sidebar:
     st.markdown(
         """
         <div style="border-radius: 10px; padding: 10px; background-color: #e6e6fa; color: #80A6D0">
-            Desain sistem ini adalah sistem rekomendasi bahan bangunan yang diterapkan menggunakan algoritma Apriori. Ini memberikan wawasan data dan rekomendasi bahan bangunan yang dipersonalisasi berdasarkan association rules, dengan menggunakan minimum support sebesar 0,05 dan minimum threshold sebesar 1.
+            Website Market Basket Analysis ini dirancang untuk membantu pemilik Toko Bangunan UD. Kurnia dalam memahami pola pembelian konsumen berdasarkan data transaksi periode Agustus 2023 hingga Juli 2024. Sistem ini dibangun menggunakan algoritma Apriori dengan parameter minimum support sebesar 0,05 dan minimum threshold (confidence) sebesar 1, guna menemukan aturan asosiasi antar produk yang sering dibeli bersamaan. Website ini menampilkan visualisasi interaktif, seperti daftar produk dengan transaksi tertinggi, grafik penjualan per bulan, serta fitur rekomendasi produk otomatis berdasarkan item yang dipilih. Dengan tampilan yang informatif dan mudah dipahami, sistem ini diharapkan dapat memberikan wawasan yang berguna dalam pengambilan keputusan, khususnya untuk strategi penataan produk dan pengelolaan stok yang lebih optimal.
         </div>
         """,
         unsafe_allow_html=True
