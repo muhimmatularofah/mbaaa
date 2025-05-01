@@ -108,14 +108,14 @@ with st.sidebar:
     st.markdown(
         """
         <div style="border-radius: 10px; padding: 10px; background-color: #e6e6fa; color: #80A6D0">
-            Website Market Basket Analysis ini dirancang untuk membantu pemilik Toko Bangunan UD. Kurnia dalam memahami pola pembelian konsumen berdasarkan data transaksi periode Agustus 2023 hingga Juli 2024. Sistem ini dibangun menggunakan algoritma Apriori dengan parameter minimum support sebesar 0,05 dan minimum threshold (confidence) sebesar 1, guna menemukan aturan asosiasi antar produk yang sering dibeli bersamaan. Website ini menampilkan visualisasi interaktif, seperti daftar produk dengan transaksi tertinggi, grafik penjualan per bulan, serta fitur rekomendasi produk otomatis berdasarkan item yang dipilih. Dengan tampilan yang informatif dan mudah dipahami, sistem ini diharapkan dapat memberikan wawasan yang berguna dalam pengambilan keputusan, khususnya untuk strategi penataan produk dan pengelolaan stok yang lebih optimal.
+            Website Market Basket Analysis ini dirancang untuk membantu pemilik Toko Bangunan UD. Kurnia dalam memahami pola pembelian konsumen berdasarkan data transaksi periode Agustus 2023 hingga Juli 2024. Sistem ini dibangun menggunakan algoritma Apriori dengan parameter minimum support sebesar 0,05 dan minimum threshold sebesar 1. Dengan tampilan yang informatif dan mudah dipahami, sistem ini diharapkan dapat memberikan wawasan yang berguna dalam pengambilan keputusan, khususnya untuk menemukan aturan asosiasi antar produk yang sering dibeli bersamaan dan pengelolaan stok yang lebih optimal.
         </div>
         """,
         unsafe_allow_html=True
     )
 
 # VIEW
-st.title("Market Basket Analysis")
+st.title("Market Basket Analysis UD. Kurnia")
 
 col1, col2, col3 = st.columns(3)
 
@@ -123,7 +123,7 @@ with col1:
     st.markdown(f"""
         <div class="card">
             <div class="card-number">{txid_count}</div>
-            <div class="card-label">TOTAL TRANSACTION</div>
+            <div class="card-label">TOTAL TRANSAKSI</div>
         </div>
     """, unsafe_allow_html=True)
 
@@ -213,7 +213,7 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-st.subheader("📊 5 Produk dengan Jumlah Penjualan Tertinggi Per Bulan")
+st.subheader("📊 5 Produk dengan Jumlah Item yang Terjual Per Bulan")
 topSalesPerMonthOptions = st.selectbox(
     "Pilih bulan:",
     topSalesMonths,
@@ -251,7 +251,7 @@ selected = st.selectbox("Pilih aturan asosiasi:", options, key="rule_selector")
 
 # Tampilkan nilai confidence dari rule yang dipilih
 selected_row = df4.iloc[options[options == selected].index[0]]
-st.markdown(f"**Confidence** dari aturan ini adalah: `{selected_row['confidence']:.4f}`")
+st.markdown(f"**Nilai Kepercayaan** dari aturan tersebut adalah: `{selected_row['confidence']:.4f}`")
 # END ASSOCIATION RULES
 
 
@@ -278,7 +278,7 @@ recommendations = matched_rules['consequents'].apply(lambda x: ', '.join(x)).uni
 
 # Tampilkan rekomendasi
 if len(recommendations) > 0:
-    st.write(f"📦 Rekomendasi produk berdasarkan '{selected_antecedent}':")
+    st.write(f"📦 Rekomendasi produk berdasarkan item '{selected_antecedent}' yang dibeli:")
     for item in recommendations:
         st.markdown(f"- {item}")
 else:
