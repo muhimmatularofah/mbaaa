@@ -176,7 +176,7 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-st.subheader("📊 5 Produk dengan Jumlah Transaksi Tertinggi Per Bulan")
+st.subheader("📊 5 Produk dengan Jumlah Transaksi Tertinggi (Bulan)")
 topTrxPerMonthOptions = st.selectbox(
     "Pilih bulan:",
     months,
@@ -213,7 +213,7 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-st.subheader("📊 5 Produk dengan Jumlah Item yang Terjual Per Bulan")
+st.subheader("📊 5 Produk dengan Jumlah Item yang Terjual (Bulan)")
 topSalesPerMonthOptions = st.selectbox(
     "Pilih bulan:",
     topSalesMonths,
