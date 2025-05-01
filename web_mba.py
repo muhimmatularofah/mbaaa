@@ -246,7 +246,7 @@ st.markdown(
 )
 st.subheader("⭐ Association Rules")
 # Buat pilihan format string "if [A] then [B]"
-options = df4.apply(lambda row: f"Jika membeli **{', '.join(row['antecedents'])}**, maka akan membeli  **{', '.join(row['consequents'])}** juga.", axis=1)
+options = df4.apply(lambda row: f"Jika membeli {', '.join(row['antecedents'])}, maka akan membeli  {', '.join(row['consequents'])} juga.", axis=1)
 selected = st.selectbox("Pilih aturan asosiasi:", options, key="rule_selector")
 
 # Tampilkan nilai confidence dari rule yang dipilih
