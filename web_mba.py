@@ -228,6 +228,8 @@ if uploaded_file is not None:
     st.write(getTopSalesPerMonth(topSalesPerMonthOptions))
     # END SELECT TOP SALES PER MONTH
 
+    # VIEW
+    st.title("Penerapan Algoritma Apriori")
 
     # ASSOCIATION RULES
     df1 = df_sorted.set_index('TRX_ID')
@@ -235,8 +237,24 @@ if uploaded_file is not None:
     df1HotEncoded = df1.pivot_table(index='TRX_ID', columns='nama_barang', values='pcs', aggfunc='sum').fillna(0)
     df1HotEncoded[df1HotEncoded > 0] = 1
     dfSparse = df1HotEncoded.astype(pd.SparseDtype(int, fill_value=0))
-    df3 = apriori(dfSparse, min_support=0.005, use_colnames=True)
-    df4 = association_rules(df3, metric='lift', min_threshold=1)[['antecedents', 'consequents', 'support', 'confidence', 'lift']]
+
+    # Pilih nilai minimum support
+    min_support = st.selectbox(
+        "Pilih nilai Minimum Support:",
+        options=[0.05, 0.02, 0.005, 0.001],
+        index=0,  # default 0.005
+        format_func=lambda x: f"{x:.3f}"
+    )
+
+    # Pilih nilai minimum threshold (lift)
+    min_threshold = st.selectbox(
+        "Pilih nilai Minimum Threshold (Lift):",
+        options=[1, 1.5, 2],
+        index=0
+    )
+
+    df3 = apriori(dfSparse, min_support=min_support, use_colnames=True)
+    df4 = association_rules(df3, metric='lift', min_threshold=min_threshold)[['antecedents', 'consequents', 'support', 'confidence', 'lift']]
 
     st.markdown(
         """
