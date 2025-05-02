@@ -1,36 +1,16 @@
 import streamlit as st
 import pandas as pd
 
-#uploaded_files = st.file_uploader(
-#    "Choose a CSV file", accept_multiple_files=True
-#)
-#all_data = pd.DataFrame()
-#for uploaded_file in uploaded_files:
-#    bytes_data = uploaded_file.read()
-#    st.write("filename:", uploaded_file.name)
-#    st.write(bytes_data)
-    
-#    output = pd.read_csv (uploaded_file)
-#    all_data = pd.contact([all_data, output], ignore_index=True)
-
 uploaded_files = st.file_uploader(
     "Choose a CSV file", accept_multiple_files=True
 )
 all_data = pd.DataFrame()
-
 for uploaded_file in uploaded_files:
     bytes_data = uploaded_file.read()
-    # Menghapus atau mengomentari bagian ini untuk tidak mencetak nama file dan data
-    # st.write("filename:", uploaded_file.name)
-    # st.write(bytes_data)
-    
-    # Membaca file CSV dan menggabungkan data
-    output = pd.read_csv(uploaded_file)
-    all_data = pd.concat([all_data, output], ignore_index=True)
-
+    st.write("filename:", uploaded_file.name)
 
 # Unduh file CSV dari Google Drive
-# output = 'data.csv'  # nama file setelah diunduh
+ output = 'data.csv'  # nama file setelah diunduh
 dfx = pd.read_csv("sorted_by_item.csv")
 df = pd.read_csv(output)
 
