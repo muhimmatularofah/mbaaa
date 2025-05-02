@@ -11,7 +11,6 @@ for uploaded_file in uploaded_files:
 
 # Unduh file CSV dari Google Drive
 output = 'data.csv'  # nama file setelah diunduh
-dfx = pd.read_csv('sorted_by_item.csv')
 df = pd.read_csv(output)
 
 # Memilih hanya kolom yang dibutuhkan
@@ -236,7 +235,7 @@ st.write(getTopSalesPerMonth(topSalesPerMonthOptions))
 import mlxtend.frequent_patterns.association_rules as association_rules
 import mlxtend.frequent_patterns.apriori as apriori
 
-df1 = pd.read_csv('sorted_by_item.csv', index_col = ['TRX_ID'])
+df1 = pd.read_csv(df_sorted, index_col = ['TRX_ID'])
 df1['date'] = pd.to_datetime(df1['date']).dt.strftime('%Y%m%d').astype(int)
 df1HotEncoded =df1.pivot_table(index='TRX_ID', columns='nama_barang', values='pcs')
 df1HotEncoded = df1.pivot_table(index='TRX_ID', columns='nama_barang', values='pcs', aggfunc='sum').fillna(0)
