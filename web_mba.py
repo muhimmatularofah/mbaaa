@@ -10,7 +10,7 @@ for uploaded_file in uploaded_files:
     st.write("filename:", uploaded_file.name)
 
 # Unduh file CSV dari Google Drive
-output = 'data.csv'  # nama file setelah diunduh
+output = 'sorted_by_item.csv'  # nama file setelah diunduh
 df = pd.read_csv(output)
 
 # Memilih hanya kolom yang dibutuhkan
