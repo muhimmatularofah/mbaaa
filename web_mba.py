@@ -3,28 +3,13 @@ import pandas as pd
 import mlxtend.frequent_patterns.association_rules as association_rules
 import mlxtend.frequent_patterns.apriori as apriori
 
-#uploaded_files = st.file_uploader(
-#    "Choose a CSV file", accept_multiple_files=True
-#)
-#all_data = pd.DataFrame()
-#for uploaded_file in uploaded_files:
-#    bytes_data = uploaded_file.read()
-#    st.write("filename:", uploaded_file.name)
-
 uploaded_file = st.file_uploader("Silakan unggah file transaksi (.csv)", type="csv")
 
-# 2. Jika ada file yang diunggah
+# Jika ada file yang diunggah
 if uploaded_file is not None:
-    # 3. Baca file menggunakan pandas
+    # Baca file menggunakan pandas
     df = pd.read_csv(uploaded_file)
-
     st.success("Data berhasil diunggah!")
-
-# Unduh file CSV dari Google Drive
-#output = 'data.csv'  # nama file setelah diunduh
-#df = pd.read_csv(output)
-
-
 
     # Memilih hanya kolom yang dibutuhkan
     df_selected = df.iloc[:, [0, 1, 2, 3, 4, 5]]
