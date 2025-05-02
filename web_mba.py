@@ -14,7 +14,7 @@ for uploaded_file in uploaded_files:
     all_data = pd.contact([all_data, df], ignore_index=True)
 
 # Unduh file CSV dari Google Drive
-output = 'data.csv'  # nama file setelah diunduh
+# output = 'data.csv'  # nama file setelah diunduh
 dfx = pd.read_csv("sorted_by_item.csv")
 df = pd.read_csv(output)
 
