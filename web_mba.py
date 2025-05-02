@@ -48,7 +48,7 @@ cleaned['nama_barang'] = cleaned['nama_barang'].astype(str)
 df_sorted = cleaned.groupby('TRX_ID', group_keys=False).apply(lambda x: x.sort_values('nama_barang'))
 trx_count = len(df_sorted)
 item_count = len(pd.unique(df_sorted['nama_barang']))
-txid_count = dfx['TRX_ID'].nunique()
+txid_count = output['TRX_ID'].nunique()
 
 
 df_sorted['year_month'] = df_sorted['date'].dt.to_period('M')
