@@ -113,7 +113,7 @@ if uploaded_file is not None:
         st.markdown(
             """
             <div style="border-radius: 10px; padding: 10px; background-color: #e6e6fa; color: #80A6D0">
-                Website Market Basket Analysis ini dirancang untuk membantu pemilik Toko Bangunan UD. Kurnia dalam memahami pola pembelian konsumen berdasarkan data transaksi periode Agustus 2023 hingga Juli 2024. Sistem ini dibangun menggunakan algoritma Apriori dengan parameter minimum support sebesar 0,05 dan minimum threshold sebesar 1. Dengan tampilan yang informatif dan mudah dipahami, sistem ini diharapkan dapat memberikan wawasan yang berguna dalam pengambilan keputusan, khususnya untuk menemukan aturan asosiasi antar produk yang sering dibeli bersamaan dan pengelolaan stok yang lebih optimal.
+                Desain sistem Market Basket Analysis ini dirancang untuk membantu pemilik toko bangunan UD. Kurnia dalam memahami pola pembelian konsumen berdasarkan data transaksi yang telah diinput. Sistem ini dibangun menggunakan algoritma Apriori dengan pilihan parameter minimum support sebesar 0.05, 0.02, 0.005, dan 0.001 dan pilihan minimum threshold sebesar 1, 1.5, dan 2. Dengan tampilan yang informatif dan mudah dipahami, sistem ini diharapkan dapat memberikan wawasan yang berguna dalam pengambilan keputusan, khususnya untuk pengelolaan stok yang lebih optimal dan menemukan aturan asosiasi antar produk yang sering dibeli bersamaan.
             </div>
             """,
             unsafe_allow_html=True
