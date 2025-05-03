@@ -3,6 +3,7 @@ import pandas as pd
 import mlxtend.frequent_patterns.association_rules as association_rules
 import mlxtend.frequent_patterns.apriori as apriori
 
+st.title("Market Basket Analysis UD. Kurnia")
 uploaded_file = st.file_uploader("Silakan unggah file transaksi (.csv)", type="csv")
 
 # Jika ada file yang diunggah
@@ -120,8 +121,6 @@ if uploaded_file is not None:
         )
 
     # VIEW
-    st.title("Market Basket Analysis UD. Kurnia")
-
     col1, col2, col3 = st.columns(3)
 
     with col1:
