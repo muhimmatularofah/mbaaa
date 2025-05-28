@@ -170,7 +170,6 @@ if uploaded_file is not None:
 
     def getTopTrxPerMonth(month):
         subset = top_trxs_per_month[top_trxs_per_month['year_month'] == month]
-        subset = subset.sort_values(by='total_kemunculan', ascending=False)  # 🔁 Tambahkan baris ini
         st.bar_chart(subset, x='nama_barang', x_label="Nama Barang", y='total_kemunculan', y_label="Jumlah Kemunculan", horizontal=True)
         return month
 
