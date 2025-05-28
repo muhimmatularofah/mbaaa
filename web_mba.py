@@ -68,7 +68,7 @@ if uploaded_file is not None:
                             columns=['year_month', 'nama_barang', 'total_kemunculan'])
 
     # Urutkan berdasarkan Tahun-Bulan dan total kemunculan terbesar
-    result_df = result_df.sort_values(by=['year_month', 'total_kemunculan'])
+    result_df = result_df.sort_values(by=['year_month', 'total_kemunculan'].sort_values(by='total_kemunculan', ascending=False))
 
 
     # TOP 5 TRANSACTION
@@ -169,7 +169,8 @@ if uploaded_file is not None:
         months.append(month)
 
     def getTopTrxPerMonth(month):
-        subset = top_trxs_per_month[top_trxs_per_month['year_month'] == month].sort_values(by='total_kemunculan', ascending=False)
+        subset = top_trxs_per_month[top_trxs_per_month['year_month'] == month]
+        subset = subset.sort_values(by='total_kemunculan', ascending=False)  # 🔁 Tambahkan baris ini
         st.bar_chart(subset, x='nama_barang', x_label="Nama Barang", y='total_kemunculan', y_label="Jumlah Kemunculan", horizontal=True)
         return month
 
@@ -206,7 +207,7 @@ if uploaded_file is not None:
         topSalesMonths.append(month)
 
     def getTopSalesPerMonth(month):
-        subset = top_saless_per_month[top_saless_per_month['tahun_bulan'] == month].sort_values(by='pcs', ascending=False)
+        subset = top_saless_per_month[top_saless_per_month['tahun_bulan'] == month]
         st.bar_chart(subset, x='nama_barang', x_label="Nama Barang", y='pcs', y_label="Jumlah Kemunculan", horizontal=True)
         return month
 
