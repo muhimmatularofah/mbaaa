@@ -68,7 +68,7 @@ if uploaded_file is not None:
                             columns=['year_month', 'nama_barang', 'total_kemunculan'])
 
     # Urutkan berdasarkan Tahun-Bulan dan total kemunculan terbesar
-    result_df = result_df.sort_values(by=['year_month', 'total_kemunculan'].sort_values(by='total_kemunculan', ascending=False))
+    result_df = result_df.sort_values(by=['year_month', 'total_kemunculan'], ascending=[True, False])
 
 
     # TOP 5 TRANSACTION
