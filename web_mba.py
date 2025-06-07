@@ -159,20 +159,43 @@ if uploaded_file is not None:
     st.subheader("📊 5 Produk dengan Jumlah Transaksi Tertinggi")
     st.bar_chart(top_5_chart)
 
-
+    
     # SELECT TOP TRXs PER MONTH
     # Ambil 5 item terbanyak di setiap bulan
     top_trxs_per_month = result_df.groupby('year_month').apply(lambda x: x.nlargest(5, 'total_kemunculan')).reset_index(drop=True)
     months = []
-
+    
     for month in top_trxs_per_month['year_month'].unique():
         months.append(month)
-
+    
     def getTopTrxPerMonth(month):
         subset = top_trxs_per_month[top_trxs_per_month['year_month'] == month]
         st.bar_chart(subset, x='nama_barang', x_label="Nama Barang", y='total_kemunculan', y_label="Jumlah Kemunculan", horizontal=True)
+    
+        # Cari selisih dengan bulan sebelumnya
+        months_sorted = sorted(top_trxs_per_month['year_month'].unique())
+        current_index = months_sorted.index(month)
+    
+        if current_index > 0:
+            prev_month = months_sorted[current_index - 1]
+            prev_subset = top_trxs_per_month[top_trxs_per_month['year_month'] == prev_month]
+    
+            st.markdown("### ℹ️ Selisih Kemunculan dibanding Bulan Sebelumnya:")
+            for _, row in subset.iterrows():
+                item = row['nama_barang']
+                current_total = row['total_kemunculan']
+                prev_row = prev_subset[prev_subset['nama_barang'] == item]
+                if not prev_row.empty:
+                    prev_total = prev_row.iloc[0]['total_kemunculan']
+                    diff = current_total - prev_total
+                    st.write(f"{item}: {diff:+d} kali")
+                else:
+                    st.write(f"{item}: (baru muncul bulan ini)")
+        else:
+            st.info("Data bulan sebelumnya tidak tersedia untuk perbandingan.")
+    
         return month
-
+    
     st.markdown(
         """
         <div style="margin-top: 50px;">
@@ -186,10 +209,10 @@ if uploaded_file is not None:
         months,
         key="topTrx"
     )
-
+    
     st.write(getTopTrxPerMonth(topTrxPerMonthOptions))
     # END SELECT TOP TRXs PER MONTH
-
+    
     # SELECT TOP SALES PER MONTH
     # Ambil format tahun-bulan
     df_sorted["tahun_bulan"] = df_sorted["date"].dt.to_period("M").astype(str)
@@ -199,17 +222,40 @@ if uploaded_file is not None:
     monthly_sales = monthly_sales.sort_values(by=["tahun_bulan", "pcs"], ascending=[True, False])
     # Ambil 5 item terbanyak di setiap bulan
     top_saless_per_month = monthly_sales.groupby('tahun_bulan').apply(lambda x: x.nlargest(5, 'pcs')).reset_index(drop=True)
-
+    
     topSalesMonths = []
-
+    
     for month in top_saless_per_month['tahun_bulan'].unique():
         topSalesMonths.append(month)
-
+    
     def getTopSalesPerMonth(month):
         subset = top_saless_per_month[top_saless_per_month['tahun_bulan'] == month]
-        st.bar_chart(subset, x='nama_barang', x_label="Nama Barang", y='pcs', y_label="Jumlah Kemunculan", horizontal=True)
+        st.bar_chart(subset, x='nama_barang', x_label="Nama Barang", y='pcs', y_label="Jumlah Terjual", horizontal=True)
+    
+        # Cari selisih dengan bulan sebelumnya
+        months_sorted = sorted(top_saless_per_month['tahun_bulan'].unique())
+        current_index = months_sorted.index(month)
+    
+        if current_index > 0:
+            prev_month = months_sorted[current_index - 1]
+            prev_subset = top_saless_per_month[top_saless_per_month['tahun_bulan'] == prev_month]
+    
+            st.markdown("### ℹ️ Selisih Penjualan dibanding Bulan Sebelumnya:")
+            for _, row in subset.iterrows():
+                item = row['nama_barang']
+                current_pcs = row['pcs']
+                prev_row = prev_subset[prev_subset['nama_barang'] == item]
+                if not prev_row.empty:
+                    prev_pcs = prev_row.iloc[0]['pcs']
+                    diff = current_pcs - prev_pcs
+                    st.write(f"{item}: {diff:+d} pcs")
+                else:
+                    st.write(f"{item}: (baru muncul bulan ini)")
+        else:
+            st.info("Data bulan sebelumnya tidak tersedia untuk perbandingan.")
+    
         return month
-
+    
     st.markdown(
         """
         <div style="margin-top: 50px;">
@@ -223,10 +269,10 @@ if uploaded_file is not None:
         topSalesMonths,
         key="topSales"
     )
-
+    
     st.write(getTopSalesPerMonth(topSalesPerMonthOptions))
     # END SELECT TOP SALES PER MONTH
-
+    
     # VIEW
     st.title("Penerapan Algoritma Apriori")
 
