@@ -178,7 +178,7 @@ if uploaded_file is not None:
     
         if current_index > 0:
             prev_month = months_sorted[current_index - 1]
-            prev_subset = monthly_sales[monthly_sales['tahun_bulan'] == prev_month]
+            prev_subset = top_trxs_per_month[top_trxs_per_month['year_month'] == prev_month]
     
             st.markdown("### ℹ️ Selisih Kemunculan dibanding Bulan Sebelumnya:")
             for _, row in subset.iterrows():
