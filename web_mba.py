@@ -163,6 +163,7 @@ if uploaded_file is not None:
     # SELECT TOP TRXs PER MONTH
     # Ambil 5 item terbanyak di setiap bulan
     top_trxs_per_month = result_df.groupby('year_month').apply(lambda x: x.nlargest(5, 'total_kemunculan')).reset_index(drop=True)
+    trxs_per_month = result_df.groupby('year_month').reset_index(drop=True)
     months = []
     
     for month in top_trxs_per_month['year_month'].unique():
@@ -173,7 +174,7 @@ if uploaded_file is not None:
         st.bar_chart(subset, x='nama_barang', x_label="Nama Barang", y='total_kemunculan', y_label="Jumlah Kemunculan", horizontal=True)
     
         # Cari selisih dengan bulan sebelumnya
-        months_sorted = sorted(top_trxs_per_month['year_month'].unique())
+        months_sorted = sorted(trxs_per_month['year_month'].unique())
         current_index = months_sorted.index(month)
     
         if current_index > 0:
