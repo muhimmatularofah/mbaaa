@@ -70,7 +70,6 @@ if uploaded_file is not None:
     # Urutkan berdasarkan Tahun-Bulan dan total kemunculan terbesar
     result_df = result_df.sort_values(by=['year_month', 'total_kemunculan'], ascending=[True, False])
 
-
     # TOP 5 TRANSACTION
     count = df_sorted['nama_barang'].value_counts().reset_index()
     count.columns = ['nama_barang', 'jumlah_transaksi']
@@ -78,7 +77,7 @@ if uploaded_file is not None:
     # Mengambil 5 produk dengan jumlah transaksi tertinggi
     top_5 = count.nlargest(5, 'jumlah_transaksi')
     # Agar cocok dengan st.bar_chart, set index ke nama barang
-    top_5_chart = top_5.set_index('nama_barang')
+    top_5_chart = top_5.set_index('nama_barang').sort_values('jumlah_transaksi', ascending=False)
 
 
     # STYLE
