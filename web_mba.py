@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import mlxtend.frequent_patterns.association_rules as association_rules
 import mlxtend.frequent_patterns.apriori as apriori
+import altair as alt
 
 st.title("Market Basket Analysis UD. Kurnia")
 uploaded_file = st.file_uploader("Silakan unggah file transaksi (.csv)", type="csv")
@@ -77,7 +78,7 @@ if uploaded_file is not None:
     # Mengambil 5 produk dengan jumlah transaksi tertinggi
     top_5 = count.nlargest(5, 'jumlah_transaksi')
     # Agar cocok dengan st.bar_chart, set index ke nama barang
-    top_5_chart = top_5.set_index('nama_barang').sort_values('jumlah_transaksi', ascending=False)
+    # top_5_chart = top_5.set_index('nama_barang')
 
 
     # STYLE
@@ -156,7 +157,19 @@ if uploaded_file is not None:
         unsafe_allow_html=True
     )
     st.subheader("📊 5 Produk dengan Jumlah Transaksi Tertinggi")
-    st.bar_chart(top_5_chart)
+    #st.bar_chart(top_5_chart)
+    # Visualisasi dengan Altair
+    chart = alt.Chart(top_5).mark_bar().encode(
+        x=alt.X('nama_barang:N', sort='-y'),  # urutkan dari nilai tertinggi ke terendah
+        y='jumlah_transaksi:Q',
+        tooltip=['nama_barang', 'jumlah_transaksi']
+    ).properties(
+        width='container',
+        height=400
+    )
+    
+    st.altair_chart(chart, use_container_width=True)
+
 
 
     # SELECT TOP TRXs PER MONTH
