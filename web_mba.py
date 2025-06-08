@@ -169,23 +169,22 @@ if uploaded_file is not None:
         months.append(month)
         
     def getTopTrxPerMonth(month):
-        subset = result_df[result_df['year_month'] == month].nlargest(5, 'total_kemunculan')
+        subset = top_trxs_per_month[top_trxs_per_month['year_month'] == month]
         st.bar_chart(subset, x='nama_barang', x_label="Nama Barang", y='total_kemunculan', y_label="Jumlah Kemunculan", horizontal=True)
     
-        # Ambil seluruh item dari bulan sebelumnya (bukan hanya 5 teratas)
-        months_sorted = sorted(result_df['year_month'].unique())
+        # Cari selisih dengan bulan sebelumnya
+        months_sorted = sorted(top_trxs_per_month['year_month'].unique())
         current_index = months_sorted.index(month)
     
         if current_index > 0:
             prev_month = months_sorted[current_index - 1]
-            prev_all = result_df[result_df['year_month'] == prev_month]
+            prev_subset = top_trxs_per_month[top_trxs_per_month['year_month'] == prev_month]
     
-            st.markdown("### ℹ️ Selisih Kemunculan dibanding Bulan Sebelumnya (untuk 5 item teratas bulan ini):")
+            st.markdown("### ℹ️ Selisih Kemunculan dibanding Bulan Sebelumnya:")
             for _, row in subset.iterrows():
                 item = row['nama_barang']
                 current_total = row['total_kemunculan']
-                prev_row = prev_all[prev_all['nama_barang'] == item]
-    
+                prev_row = prev_subset[prev_subset['nama_barang'] == item]
                 if not prev_row.empty:
                     prev_total = prev_row.iloc[0]['total_kemunculan']
                     diff = current_total - prev_total
@@ -196,6 +195,7 @@ if uploaded_file is not None:
             st.info("Data bulan sebelumnya tidak tersedia untuk perbandingan.")
     
         return month
+
     
     st.markdown(
         """
@@ -228,29 +228,28 @@ if uploaded_file is not None:
     
     for month in top_saless_per_month['tahun_bulan'].unique():
         topSalesMonths.append(month)
-        
+            
     def getTopSalesPerMonth(month):
-        subset = monthly_sales[monthly_sales['tahun_bulan'] == month].nlargest(5, 'pcs')
+        subset = top_saless_per_month[top_saless_per_month['tahun_bulan'] == month]
         st.bar_chart(subset, x='nama_barang', x_label="Nama Barang", y='pcs', y_label="Jumlah Terjual", horizontal=True)
     
-        # Ambil seluruh item dari bulan sebelumnya
-        months_sorted = sorted(monthly_sales['tahun_bulan'].unique())
+        # Cari selisih dengan bulan sebelumnya
+        months_sorted = sorted(top_saless_per_month['tahun_bulan'].unique())
         current_index = months_sorted.index(month)
     
         if current_index > 0:
             prev_month = months_sorted[current_index - 1]
-            prev_all = monthly_sales[monthly_sales['tahun_bulan'] == prev_month]
+            prev_subset = top_saless_per_month[top_saless_per_month['tahun_bulan'] == prev_month]
     
-            st.markdown("### ℹ️ Selisih Penjualan dibanding Bulan Sebelumnya (untuk 5 item teratas bulan ini):")
+            st.markdown("### ℹ️ Selisih Penjualan dibanding Bulan Sebelumnya:")
             for _, row in subset.iterrows():
                 item = row['nama_barang']
                 current_pcs = row['pcs']
-                prev_row = prev_all[prev_all['nama_barang'] == item]
-    
+                prev_row = prev_subset[prev_subset['nama_barang'] == item]
                 if not prev_row.empty:
                     prev_pcs = prev_row.iloc[0]['pcs']
                     diff = current_pcs - prev_pcs
-                    st.write(f"{item}: {int(diff):+d} pcs")
+                    st.write(f"{item}: {diff:+d} pcs")
                 else:
                     st.write(f"{item}: (baru muncul bulan ini)")
         else:
