@@ -250,7 +250,7 @@ if uploaded_file is not None:
                 if not prev_row.empty:
                     prev_pcs = prev_row.iloc[0]['pcs']
                     diff = current_pcs - prev_pcs
-                    st.write(f"{item}: {diff:+d} pcs")
+                    st.write(f"{item}: {int(diff):+d} pcs")
                 else:
                     st.write(f"{item}: (baru muncul bulan ini)")
         else:
