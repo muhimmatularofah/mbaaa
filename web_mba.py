@@ -224,6 +224,7 @@ if uploaded_file is not None:
     monthly_sales = monthly_sales.sort_values(by=["tahun_bulan", "pcs"], ascending=[True, False])
     # Ambil 5 item terbanyak di setiap bulan
     top_saless_per_month = monthly_sales.groupby('tahun_bulan').apply(lambda x: x.nlargest(5, 'pcs')).reset_index(drop=True)
+    saless_per_month = monthly_sales.groupby('tahun_bulan').apply(lambda x: x.nlargest(96, 'pcs')).reset_index(drop=True)
     
     topSalesMonths = []
     
@@ -235,12 +236,12 @@ if uploaded_file is not None:
         st.bar_chart(subset, x='nama_barang', x_label="Nama Barang", y='pcs', y_label="Jumlah Terjual", horizontal=True)
     
         # Cari selisih dengan bulan sebelumnya
-        months_sorted = sorted(top_saless_per_month['tahun_bulan'].unique())
+        months_sorted = sorted(saless_per_month['tahun_bulan'].unique())
         current_index = months_sorted.index(month)
     
         if current_index > 0:
             prev_month = months_sorted[current_index - 1]
-            prev_subset = top_saless_per_month[top_saless_per_month['tahun_bulan'] == prev_month]
+            prev_subset = saless_per_month[saless_per_month['tahun_bulan'] == prev_month]
     
             st.markdown("### ℹ️ Selisih Penjualan dibanding Bulan Sebelumnya:")
             for _, row in subset.iterrows():
