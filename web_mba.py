@@ -183,8 +183,17 @@ if uploaded_file is not None:
         
     def getTopTrxPerMonth(month):
         subset = top_trxs_per_month[top_trxs_per_month['year_month'] == month]
-        st.bar_chart(subset, x='nama_barang', x_label="Nama Barang", y='total_kemunculan', y_label="Jumlah Kemunculan", horizontal=True)
-    
+        # st.bar_chart(subset, x='nama_barang', x_label="Nama Barang", y='total_kemunculan', y_label="Jumlah Kemunculan", horizontal=True)
+        chart = alt.Chart(subset).mark_bar().encode(
+            x=alt.X('total_kemunculan:Q', title='Jumlah Kemunculan'),
+            y=alt.Y('nama_barang:N', sort='-x', title='Nama Barang'),
+            tooltip=['nama_barang', 'total_kemunculan']
+        ).properties(
+            width='container',
+            height=300
+        )
+        st.altair_chart(chart, use_container_width=True)
+        
         # Cari selisih dengan bulan sebelumnya
         months_sorted = sorted(trxs_per_month['year_month'].unique())
         current_index = months_sorted.index(month)
@@ -245,8 +254,17 @@ if uploaded_file is not None:
             
     def getTopSalesPerMonth(month):
         subset = top_saless_per_month[top_saless_per_month['tahun_bulan'] == month]
-        st.bar_chart(subset, x='nama_barang', x_label="Nama Barang", y='pcs', y_label="Jumlah Terjual", horizontal=True)
-    
+        # st.bar_chart(subset, x='nama_barang', x_label="Nama Barang", y='pcs', y_label="Jumlah Terjual", horizontal=True)
+        chart = alt.Chart(subset).mark_bar().encode(
+            x=alt.X('pcs:Q', title='Jumlah Terjual'),
+            y=alt.Y('nama_barang:N', sort='-x', title='Nama Barang'),
+            tooltip=['nama_barang', 'pcs']
+        ).properties(
+            width='container',
+            height=300
+        )
+        st.altair_chart(chart, use_container_width=True)
+        
         # Cari selisih dengan bulan sebelumnya
         months_sorted = sorted(saless_per_month['tahun_bulan'].unique())
         current_index = months_sorted.index(month)
