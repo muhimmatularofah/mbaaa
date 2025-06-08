@@ -175,7 +175,7 @@ if uploaded_file is not None:
     
         # Cari selisih dengan bulan sebelumnya
         months_sorted = sorted(trxs_per_month['year_month'].unique())
-        console.log(month_sorted)
+        console.log(months_sorted)
         current_index = months_sorted.index(month)
     
         if current_index > 0:
