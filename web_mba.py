@@ -167,34 +167,40 @@ if uploaded_file is not None:
     
     for month in top_trxs_per_month['year_month'].unique():
         months.append(month)
-        
+    
     def getTopTrxPerMonth(month):
         subset = top_trxs_per_month[top_trxs_per_month['year_month'] == month]
         st.bar_chart(subset, x='nama_barang', x_label="Nama Barang", y='total_kemunculan', y_label="Jumlah Kemunculan", horizontal=True)
     
-        # Cari selisih dengan bulan sebelumnya dari result_df (bukan top_5)
-        months_sorted = sorted(result_df['year_month'].unique())
+        # Cari selisih dengan bulan sebelumnya
+        months_sorted = sorted(top_trxs_per_month['year_month'].unique())
         current_index = months_sorted.index(month)
+        
+        st.markdown("### ℹ️ Selisih Kemunculan dibanding Bulan Sebelumnya:")
     
-        if current_index > 0:
-            prev_month = months_sorted[current_index - 1]
-            prev_subset = result_df[result_df['year_month'] == prev_month]
-    
-            st.markdown("### ℹ️ Selisih Kemunculan dibanding Bulan Sebelumnya:")
-            current_month_data = result_df[result_df['year_month'] == month]
-    
-            for _, row in current_month_data.iterrows():
-                item = row['nama_barang']
-                current_total = row['total_kemunculan']
+        for _, row in subset.iterrows():
+            item = row['nama_barang']
+            current_total = row['total_kemunculan']
+            
+            # Default selisih = 0
+            diff = 0
+            
+            if current_index > 0:
+                prev_month = months_sorted[current_index - 1]
+                prev_subset = top_trxs_per_month[top_trxs_per_month['year_month'] == prev_month]
                 prev_row = prev_subset[prev_subset['nama_barang'] == item]
+                
                 if not prev_row.empty:
                     prev_total = prev_row.iloc[0]['total_kemunculan']
                     diff = current_total - prev_total
-                    st.write(f"{item}: {diff:+d} kali")
                 else:
                     st.write(f"{item}: (baru muncul bulan ini)")
-        else:
-            st.info("Data bulan sebelumnya tidak tersedia untuk perbandingan.")
+                    continue  # Lewati penulisan selisih
+            else:
+                st.write(f"{item}: (bulan pertama)")
+                continue
+    
+            st.write(f"{item}: {diff:+d} kali")
     
         return month
     
@@ -230,40 +236,40 @@ if uploaded_file is not None:
     for month in top_saless_per_month['tahun_bulan'].unique():
         topSalesMonths.append(month)
     
-def getTopSalesPerMonth(month):
-    subset = top_saless_per_month[top_saless_per_month['tahun_bulan'] == month]
-    st.bar_chart(subset, x='nama_barang', x_label="Nama Barang", y='pcs', y_label="Jumlah Terjual", horizontal=True)
-
-    # Cari selisih dengan bulan sebelumnya
-    months_sorted = sorted(top_saless_per_month['tahun_bulan'].unique())
-    current_index = months_sorted.index(month)
+    def getTopSalesPerMonth(month):
+        subset = top_saless_per_month[top_saless_per_month['tahun_bulan'] == month]
+        st.bar_chart(subset, x='nama_barang', x_label="Nama Barang", y='pcs', y_label="Jumlah Terjual", horizontal=True)
     
-    st.markdown("### ℹ️ Selisih Penjualan dibanding Bulan Sebelumnya:")
-
-    for _, row in subset.iterrows():
-        item = row['nama_barang']
-        current_pcs = row['pcs']
+        # Cari selisih dengan bulan sebelumnya
+        months_sorted = sorted(top_saless_per_month['tahun_bulan'].unique())
+        current_index = months_sorted.index(month)
         
-        diff = 0
-        
-        if current_index > 0:
-            prev_month = months_sorted[current_index - 1]
-            prev_subset = top_saless_per_month[top_saless_per_month['tahun_bulan'] == prev_month]
-            prev_row = prev_subset[prev_subset['nama_barang'] == item]
+        st.markdown("### ℹ️ Selisih Penjualan dibanding Bulan Sebelumnya:")
+    
+        for _, row in subset.iterrows():
+            item = row['nama_barang']
+            current_pcs = row['pcs']
             
-            if not prev_row.empty:
-                prev_pcs = prev_row.iloc[0]['pcs']
-                diff = current_pcs - prev_pcs
+            diff = 0
+            
+            if current_index > 0:
+                prev_month = months_sorted[current_index - 1]
+                prev_subset = top_saless_per_month[top_saless_per_month['tahun_bulan'] == prev_month]
+                prev_row = prev_subset[prev_subset['nama_barang'] == item]
+                
+                if not prev_row.empty:
+                    prev_pcs = prev_row.iloc[0]['pcs']
+                    diff = current_pcs - prev_pcs
+                else:
+                    st.write(f"{item}: (baru muncul bulan ini)")
+                    continue
             else:
-                st.write(f"{item}: (baru muncul bulan ini)")
+                st.write(f"{item}: (bulan pertama)")
                 continue
-        else:
-            st.write(f"{item}: (bulan pertama)")
-            continue
-
-        st.write(f"{item}: {int(diff):+d} pcs")
-
-    return month
+    
+            st.write(f"{item}: {int(diff):+d} pcs")
+    
+        return month
     
     st.markdown(
         """
