@@ -4,14 +4,17 @@ import mlxtend.frequent_patterns.association_rules as association_rules
 import mlxtend.frequent_patterns.apriori as apriori
 import altair as alt
 
-st.title("Market Basket Analysis UD. Kurnia")
-uploaded_file = st.file_uploader("Silakan unggah file transaksi (.csv)", type="csv")
+#st.title("Market Basket Analysis UD. Kurnia")
+#uploaded_file = st.file_uploader("Silakan unggah file transaksi (.csv)", type="csv")
 
 # Jika ada file yang diunggah
-if uploaded_file is not None:
-    # Baca file menggunakan pandas
-    df = pd.read_csv(uploaded_file)
-    st.success("Data berhasil diunggah!")
+#if uploaded_file is not None:
+#    # Baca file menggunakan pandas
+#    df = pd.read_csv(uploaded_file)
+#    st.success("Data berhasil diunggah!")
+    
+    output = 'contoh_data.csv'  # nama file setelah diunduh
+    df = pd.read_csv(output)
 
     # Memilih hanya kolom yang dibutuhkan
     df_selected = df.iloc[:, [0, 1, 2, 3, 4, 5]]
