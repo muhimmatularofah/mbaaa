@@ -4,8 +4,8 @@ import mlxtend.frequent_patterns.association_rules as association_rules
 import mlxtend.frequent_patterns.apriori as apriori
 import altair as alt
 
-#st.title("Market Basket Analysis UD. Kurnia")
-#uploaded_file = st.file_uploader("Silakan unggah file transaksi (.csv)", type="csv")
+st.title("Market Basket Analysis UD. Kurnia")
+uploaded_file = st.file_uploader("Silakan unggah file transaksi (.csv)", type="csv")
 
 # Jika ada file yang diunggah
 #if uploaded_file is not None:
